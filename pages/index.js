@@ -3,14 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import utilStyles from "../styles/utils.module.css";
-import Layout from "../components/Layout";
+import Layout, { siteTitle } from "../components/Layout";
 import { getPostsData } from "../lib/post";
 
 // SSGの場合 (外部から一度だけデータを持ってくる)
 export async function getStaticProps() {
   // getStaticProps!!
   const allPostsData = getPostsData();
-  console.log(allPostsData);
+  // console.log(allPostsData);
 
   return {
     props: {
@@ -31,7 +31,10 @@ export async function getStaticProps() {
 
 export default function Home({ allPostsData }) {
   return (
-    <Layout>
+    <Layout home>
+      <Head>
+        <title>{siteTitle}</title>
+      </Head>
       <section className={utilStyles.headingMd}>
         <p>Next.jsを勉強しています。好きな言語はJavascriptです。</p>
       </section>
@@ -51,7 +54,7 @@ export default function Home({ allPostsData }) {
                 </a>
               </Link>
               <Link href={`/posts/${id}`}>
-                <a className={utilStyles.boldText}>{title}</a>
+                <a>{title}</a>
               </Link>
               <br />
               <small className={utilStyles.lightText}>{date}</small>
